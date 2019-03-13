@@ -1,0 +1,19 @@
+.table-nonfluid {
+   width: auto !important;
+}
+
+.table-nonfluid>thead>tr>th {
+   width: 220px;
+}
+
+#error-panel {
+    display: none;
+    width: 470px;
+}
+
+
+
+.result_container, .form-main {
+    margin-top: 10px;
+    width: 470px;
+}

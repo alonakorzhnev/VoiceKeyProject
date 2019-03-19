@@ -18,17 +18,26 @@ def signUp(request):
 def handle_audio(request):
     if request.method == 'POST':
         try:
-            print("TEST1")
             data = request.body
-            test = json.loads(data)
-            print(test['foo'])
-            print("TEST2")
 
-            #with open("file_name", 'wb') as f:
-                #f.write(data)
+            with open("file_name", 'wb') as f:
+                f.write(data)
 
-            #fs, audio = wav.read("file_name")
-            #wav.write("file_name2", fs, audio)
+            fs, audio = wav.read("file_name")
+            wav.write("file_name2", fs, audio)
+
+            msg = "ok"
+        except Exception as err:
+            msg = "failed"
+        return HttpResponse(msg)
+
+
+@csrf_exempt
+def handle_userName(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            print(data['userName'])
 
             msg = "ok"
         except Exception as err:

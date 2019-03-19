@@ -104,11 +104,27 @@
         $.ajax({
           url: "/handleaudio/",
           type: "POST",
-          //contentType: 'application/octet-stream',
-            contentType: 'application/json',
-          //data: {audio: audioData},
-          //data: audioData,
-            data: '{"foo": "test"}',
+          contentType: 'application/octet-stream',
+          data: audioData,
+          processData: false,
+          headers: {
+            'X-CSRFTOKEN': csrftoken
+          },
+          success: function(response){
+            $('#result').text(response);
+          },
+          error: function(response){
+            $('#result').text(response.responseText);
+          }
+        });
+
+        var userData = JSON.stringify({userName: userName.value});
+
+        $.ajax({
+          url: "/handleUserName/",
+          type: "POST",
+          contentType: 'application/jason',
+          data: userData,
           processData: false,
           headers: {
             'X-CSRFTOKEN': csrftoken

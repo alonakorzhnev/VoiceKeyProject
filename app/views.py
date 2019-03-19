@@ -12,15 +12,20 @@ def signIn(request):
 def signUp(request):
     return render(request, 'app/signUp.html')
 
+
 @csrf_exempt
 def handle_audio(request):
     try:
-        data = request.body
-        with open("file_name", 'wb') as f:
-            f.write(data)
+        print("TEST1")
+        data = request.POST['text']
+        #print(data)
+        print("TEST2")
 
-        fs, audio = wav.read("file_name")
-        wav.write("file_name2", fs, audio)
+        #with open("file_name", 'wb') as f:
+            #f.write(data)
+
+        #fs, audio = wav.read("file_name")
+        #wav.write("file_name2", fs, audio)
 
         msg = "ok"
     except Exception as err:

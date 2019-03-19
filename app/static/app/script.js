@@ -11,6 +11,7 @@
     var csrftoken = getCookie('csrftoken');
     var socket = null;
     var interval;
+    var userName;
 
     function getCookie(name) {
       var cookieValue = null;
@@ -85,21 +86,25 @@
     }
 
     function submitToServer(){
+
+        userName = document.getElementById('userName');
+        if(userName != null && userName.value == ''){
+            displayError("There is no user name here!");
+            return;
+        }
+
         if(audioData == null) {
             displayError("There is no audio data here!");
             return;
         }
 
         $('#error-panel').hide();
-        $('#progress-panel').show();
-        $('.progress-bar').css('width', '0%').attr('aria-valuenow', 0);
-        $('.progress-bar').animate({
-            width: "100%"
-        }, 1500);
+
         $.ajax({
           url: "/handleaudio/",
           type: "POST",
           contentType: 'application/octet-stream',
+          //data: {audio: audioData},
           data: audioData,
           processData: false,
           headers: {
@@ -107,11 +112,9 @@
           },
           success: function(response){
             $('#result').text(response);
-            $('#progress-panel').hide();
           },
           error: function(response){
             $('#result').text(response.responseText);
-            $('#progress-panel').hide();
           }
         });
     }

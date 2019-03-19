@@ -100,12 +100,15 @@
 
         $('#error-panel').hide();
 
+
         $.ajax({
           url: "/handleaudio/",
           type: "POST",
-          contentType: 'application/octet-stream',
+          //contentType: 'application/octet-stream',
+            contentType: 'application/json',
           //data: {audio: audioData},
-          data: audioData,
+          //data: audioData,
+            data: '{"foo": "test"}',
           processData: false,
           headers: {
             'X-CSRFTOKEN': csrftoken

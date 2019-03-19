@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 from django.http.response import HttpResponse
 import scipy.io.wavfile as wav
+import json
 
 
 @ensure_csrf_cookie
@@ -15,19 +16,21 @@ def signUp(request):
 
 @csrf_exempt
 def handle_audio(request):
-    try:
-        print("TEST1")
-        data = request.POST['text']
-        #print(data)
-        print("TEST2")
+    if request.method == 'POST':
+        try:
+            print("TEST1")
+            data = request.body
+            test = json.loads(data)
+            print(test['foo'])
+            print("TEST2")
 
-        #with open("file_name", 'wb') as f:
-            #f.write(data)
+            #with open("file_name", 'wb') as f:
+                #f.write(data)
 
-        #fs, audio = wav.read("file_name")
-        #wav.write("file_name2", fs, audio)
+            #fs, audio = wav.read("file_name")
+            #wav.write("file_name2", fs, audio)
 
-        msg = "ok"
-    except Exception as err:
-        msg = "failed"
-    return HttpResponse(msg)
+            msg = "ok"
+        except Exception as err:
+            msg = "failed"
+        return HttpResponse(msg)

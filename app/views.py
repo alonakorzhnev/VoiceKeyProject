@@ -5,12 +5,12 @@ import scipy.io.wavfile as wav
 
 
 @ensure_csrf_cookie
-def index(request):
-    return render(request, 'app/index.html')
+def signIn(request):
+    return render(request, 'app/signIn.html')
 
 
-def registration(request):
-    return render(request, 'app/registration.html')
+def signUp(request):
+    return render(request, 'app/signUp.html')
 
 @csrf_exempt
 def handle_audio(request):

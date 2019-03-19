@@ -9,11 +9,13 @@ def index(request):
     return render(request, 'app/index.html')
 
 
+def registration(request):
+    return render(request, 'app/registration.html')
+
 @csrf_exempt
 def handle_audio(request):
     try:
         data = request.body
-
         with open("file_name", 'wb') as f:
             f.write(data)
 

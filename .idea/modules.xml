@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../VoiceKey/.idea/VoiceKey.iml" filepath="$PROJECT_DIR$/../VoiceKey/.idea/VoiceKey.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/VoiceKeyProject.iml" filepath="$PROJECT_DIR$/.idea/VoiceKeyProject.iml" />
     </modules>
   </component>
 </project>

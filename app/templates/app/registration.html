@@ -1,0 +1,93 @@
+{% extends "app/base.html" %}
+{% block content %}
+
+{% load bootstrap3 %}
+
+<div class="card-header">
+    <h2>Register</h2>
+</div>
+<div class="card-body">
+     <div class="form-main">
+            <div class="form-group">
+
+                <label>Enter your details:</label>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon user"><span class="glyphicon glyphicon-user"></span></span>
+                    <input type="text" class="form-control" placeholder="Username" aria-label="Username">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon primary"><i class="fas fa-at"></i></span>
+                    <input type="text" class="form-control" placeholder="Email" aria-label="Email">
+                </div>
+                <br>
+
+                <label for="player">Record your security phrase 3 times</label>
+
+
+                <div id="player">
+
+                    <audio controls src=""></audio>
+
+                </div>
+
+                <button onclick="startRecording()" class="btn btn-record"><i class="fas fa-microphone"></i></button>
+                <button onclick="stopRecording()" class="btn btn-stop"><span class="glyphicon glyphicon-stop"></span></button>
+
+                <br>
+
+                <button onclick="submitToServer()" id="submitAudio"
+                    class="btn btn-primary">Submit Audio 1</button>
+
+                <br><br><br>
+
+                <div id="player">
+
+                    <audio controls src=""></audio>
+
+                </div>
+
+                <button onclick="startRecording()" class="btn btn-record"><i class="fas fa-microphone"></i></button>
+                <button onclick="stopRecording()" class="btn btn-stop"><span class="glyphicon glyphicon-stop"></span></button>
+
+                <br>
+                <button onclick="submitToServer()" id="submitAudio"
+                    class="btn btn-primary">Submit Audio 2</button>
+
+                <br><br><br>
+
+                <div id="player">
+
+                    <audio controls src=""></audio>
+
+                </div>
+
+                <button onclick="startRecording()" class="btn btn-record"><i class="fas fa-microphone"></i></button>
+                <button onclick="stopRecording()" class="btn btn-stop"><span class="glyphicon glyphicon-stop"></span></button>
+
+                <br>
+
+
+            </div>
+            <div class="form-group">
+
+                <label for="file">Or choose audio file</label>
+                <input type="file" class="form-control-file" id="file"/>
+
+            </div>
+
+            <button onclick="submitToServer()" id="submitAudio"
+                    class="btn btn-primary">Submit Audio 3</button>
+
+     </div>
+</div>
+<div class="result_container form-group">
+    <label for="result">Result</label>
+    <textarea class="form-control" id="result" rows="1"></textarea>
+</div>
+
+<div id="error-panel" class="alert" role="alert">
+    <a id="error-message"></a>
+</div>
+{% endblock %}

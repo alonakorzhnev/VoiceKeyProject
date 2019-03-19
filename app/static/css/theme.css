@@ -1,15 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Numans');
 
 body {
-  padding-top: 70px;
-  padding-bottom: 30px;
-  background-image: url("wallpaper.jpg");
+  background-image: url("wallpaper.jpg") !important;
+  font-family: 'Numans', sans-serif !important;
+  color: #FFFFFF !important;
   background-size: cover;
   background-repeat: no-repeat;
   height: 100%;
-  font-family: 'Numans', sans-serif !important;
-  color: white !important;
-
+  padding-top: 70px;
+  padding-bottom: 30px;
 }
 
 .theme-dropdown .dropdown-menu {
@@ -22,25 +21,29 @@ body {
   margin: 5px 0;
 }
 
+
 .theme-showcase .navbar {
-    width: auto;
+  width: auto;
+
 }
 
-.container {
-    height: 100%;
-    width: 100%;
-    max-width: 100%;
+.container{
+  height: auto;
+  width: auto;
+  max-width: 100%;
+
 }
 
-.card {
+.card{
     height: auto !important;
-    margin: 0 auto;
-    float: none;
-    margin-bottom: 10px;
-    width: 500px;
+    margin: 0 auto; /* Added */
+    float: none; /* Added */
+    margin-bottom: 10px; /* Added */
+    width: 500px !important;
     background-color: rgba(0,0,0,0.5) !important;
     border-radius: 6px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.8);
+
 }
 
 .input-group-addon.primary {
@@ -49,9 +52,33 @@ body {
     border-color: orange;
 }
 
-.btn-primary {
-    color: white !important;
+.input-group-addon.user {
+    color: black;
+    background-color: orange;
+    border-color: orange;
+}
+
+.input-group-addon.email {
+    color: black;
+    background-color: orange;
+    border-color: orange;
+}
+
+.btn-primary{
+    color:white !important;
     background-color: orange !important;
     border-color: orange !important;
-
 }
+
+.btn-record{
+    color:white !important;
+    background-color: red !important;
+    border-color: red !important;
+}
+
+.btn-stop{
+    color:white !important;
+    background-color: blue !important;
+    border-color: blue !important;
+}
+

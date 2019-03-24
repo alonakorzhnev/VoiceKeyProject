@@ -43,3 +43,17 @@ def handle_userName(request):
         except Exception as err:
             msg = "failed"
         return HttpResponse(msg)
+
+
+@csrf_exempt
+def handle_userNameEmail(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            print(data['userName'])
+            print(data['email'])
+
+            msg = "ok"
+        except Exception as err:
+            msg = "failed"
+        return HttpResponse(msg)

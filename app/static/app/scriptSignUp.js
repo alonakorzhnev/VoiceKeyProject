@@ -20,7 +20,6 @@
           var cookies = document.cookie.split(';');
           for (var i = 0; i < cookies.length; i++) {
               var cookie = cookies[i].trim();
-              // Does this cookie string begin with the name we want?
               if (cookie.substring(0, name.length + 1) == (name + '=')) {
                   cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                   break;
@@ -44,49 +43,70 @@
             var source = audioContext.createMediaStreamSource(stream);
             recorder = audioRecorder.fromSource(source);
             recorder.record();
-            if($('#ws-radio').prop('checked') && !socket){
-            	initWebSocket();
-            } else if(socket){
-            	closeWebSocket();
-            }
         })
         .catch(function(err){
         	displayError("Error occurred while getting audio stream: " + err);
         })
     }
 
-    function stopRecording(){
+    function stopRecording(numRecord){
     	recorder.stop();
     	clearInterval(interval);
-        recorder.exportWAV(function(blob){
-            audioStream.getTracks()[0].stop();
-            audioStream = null;
-            audioData = blob;
-            var url = URL.createObjectURL(blob);
-            var mt = document.createElement('audio');
-            mt.controls = true;
-            mt.src = url;
-            $('#player')[0].innerHTML = "";
-            $('#player').append(mt);
-        }, true);
-        recorder.clear();
+    	if(numRecord == 1){
+    	    recorder.exportWAV(function(blob){
+                audioStream.getTracks()[0].stop();
+                audioStream = null;
+                audioData1 = blob;
+                var url = URL.createObjectURL(blob);
+                var mt = document.createElement('audio');
+                mt.controls = true;
+                mt.src = url;
+                $('#player1')[0].innerHTML = "";
+                $('#player1').append(mt);
+            }, true);
+            recorder.clear();
+        }
+    	else if(numRecord == 2){
+    	    recorder.exportWAV(function(blob){
+                audioStream.getTracks()[0].stop();
+                audioStream = null;
+                audioData2 = blob;
+                var url = URL.createObjectURL(blob);
+                var mt = document.createElement('audio');
+                mt.controls = true;
+                mt.src = url;
+                $('#player2')[0].innerHTML = "";
+                $('#player2').append(mt);
+            }, true);
+            recorder.clear();
+        }
+    	else{
+    	    recorder.exportWAV(function(blob){
+                audioStream.getTracks()[0].stop();
+                audioStream = null;
+                audioData3 = blob;
+                var url = URL.createObjectURL(blob);
+                var mt = document.createElement('audio');
+                mt.controls = true;
+                mt.src = url;
+                $('#player3')[0].innerHTML = "";
+                $('#player3').append(mt);
+            }, true);
+            recorder.clear();
+        }
     }
 
     function submitToServer(){
         var userName = document.getElementById('userName');
+        var email = document.getElementById('email');
+
         if(userName != null && userName.value == ''){
             displayError("There is no user name here!");
             return;
         }
 
-        var email = document.getElementById('email');
-        if(email != null && email.value == ''){
-            displayError("There is no user email here!");
-            return;
-        }
-
-        if(audioData1 == null || audioData2 == null || audioData3 == null) {
-            displayError("Some of the audio data is missing!");
+        if(audioData1 == null) {
+            displayError("There is no audio data here!");
             return;
         }
 
@@ -97,7 +117,7 @@
           url: "/handleaudio/",
           type: "POST",
           contentType: 'application/octet-stream',
-          data: audioData,
+          data: audioData1,
           processData: false,
           headers: {
             'X-CSRFTOKEN': csrftoken
@@ -110,10 +130,10 @@
           }
         });
 
-        var userData = JSON.stringify({userName: userName.value});
+        var userData = JSON.stringify({userName: userName.value, email: email.value});
 
         $.ajax({
-          url: "/handleUserName/",
+          url: "/handleUserNameEmail/",
           type: "POST",
           contentType: 'application/json',
           data: userData,
@@ -132,18 +152,40 @@
 
     var openFile = function(event) {
         var input = event.target;
-        var isValid = checkValidity(input.files[0]);
-        if(!isValid){
+
+        var isValid1 = checkValidity(input.files[0]);
+        var isValid2 = checkValidity(input.files[1]);
+        var isValid3 = checkValidity(input.files[2]);
+
+        if(!isValid1 || !isValid2 || !isValid3){
         	displayError("Only wav file type allowed.");
         	return;
         }
-        var url = URL.createObjectURL(input.files[0]);
-        var mt = document.createElement('audio');
-        audioData = input.files[0];
-        mt.controls = true;
-        mt.src = url;
-        $('#player')[0].innerHTML = "";
-        $('#player').append(mt);
+
+        var url1 = URL.createObjectURL(input.files[0]);
+        var mt1 = document.createElement('audio');
+        var url2 = URL.createObjectURL(input.files[1]);
+        var mt2 = document.createElement('audio');
+        var url3 = URL.createObjectURL(input.files[2]);
+        var mt3 = document.createElement('audio');
+
+        audioData1 = input.files[0];
+        audioData2 = input.files[1];
+        audioData3 = input.files[2];
+
+        mt1.controls = true;
+        mt1.src = url1;
+        mt2.controls = true;
+        mt2.src = url2;
+        mt3.controls = true;
+        mt3.src = url3;
+
+        $('#player1')[0].innerHTML = "";
+        $('#player1').append(mt1);
+        $('#player2')[0].innerHTML = "";
+        $('#player2').append(mt2);
+        $('#player3')[0].innerHTML = "";
+        $('#player3').append(mt3);
     };
 
     function checkValidity(file){

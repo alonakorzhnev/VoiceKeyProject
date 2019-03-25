@@ -11,7 +11,6 @@
     var csrftoken = getCookie('csrftoken');
     var socket = null;
     var interval;
-    var userName;
 
     function getCookie(name) {
       var cookieValue = null;
@@ -28,16 +27,6 @@
       }
       return cookieValue;
   }
-
-    function protocolHandler(){
-    	if($('#ws-radio').prop('checked')){
-    		$('#file').prop('disabled', true);
-    		$('#submitAudio').prop('disabled', true);
-    	} else {
-    		$('#file').prop('disabled', false);
-    		$('#submitAudio').prop('disabled', false);
-    	}
-    }
 
     function startRecording(){
     	$("#file").val("");
@@ -77,17 +66,12 @@
             mt.src = url;
             $('#player')[0].innerHTML = "";
             $('#player').append(mt);
-            if(socket && socket.readyState == WebSocket.OPEN){
-            	socket.send(audioData);
-            	closeWebSocket();
-            }
         }, true);
         recorder.clear();
     }
 
     function submitToServer(){
-
-        userName = document.getElementById('userName');
+        var userName = document.getElementById('userName');
         if(userName != null && userName.value == ''){
             displayError("There is no user name here!");
             return;
@@ -123,7 +107,7 @@
         $.ajax({
           url: "/handleUserName/",
           type: "POST",
-          contentType: 'application/jason',
+          contentType: 'application/json',
           data: userData,
           processData: false,
           headers: {

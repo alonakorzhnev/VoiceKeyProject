@@ -30,16 +30,6 @@
       return cookieValue;
   }
 
-    function protocolHandler(){
-    	if($('#ws-radio').prop('checked')){
-    		$('#file').prop('disabled', true);
-    		$('#submitAudio').prop('disabled', true);
-    	} else {
-    		$('#file').prop('disabled', false);
-    		$('#submitAudio').prop('disabled', false);
-    	}
-    }
-
     function startRecording(){
     	$("#file").val("");
     	if (navigator.mediaDevices.getUserMedia === undefined) {
@@ -71,23 +61,18 @@
         recorder.exportWAV(function(blob){
             audioStream.getTracks()[0].stop();
             audioStream = null;
-            audioData = blob;
+            audioData1 = blob;
             var url = URL.createObjectURL(blob);
             var mt = document.createElement('audio');
             mt.controls = true;
             mt.src = url;
             $('#player')[0].innerHTML = "";
             $('#player').append(mt);
-            if(socket && socket.readyState == WebSocket.OPEN){
-            	socket.send(audioData);
-            	closeWebSocket();
-            }
         }, true);
         recorder.clear();
     }
 
     function submitToServer(){
-
         var userName = document.getElementById('userName');
         if(userName != null && userName.value == ''){
             displayError("There is no user name here!");
@@ -96,34 +81,9 @@
 
         var email = document.getElementById('email');
         if(email != null && email.value == ''){
-            displayError("There is no user name here!");
+            displayError("There is no user email here!");
             return;
         }
-
-       /* var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        if(document.getElementById('email').value.match(mailformat))
-        {
-            //document.form1.text1.focus();
-           // return true;
-        }
-        else
-        {
-            displayError("You have entered an invalid email address!");
-            document.form1.text1.focus();
-            return false;
-        }*/
-
-        /*var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if(!re.test(document.getElementById('email'))) {
-            displayError("You have entered an invalid email address!");
-            return;
-        }*/
-
-        /*if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(document.getElementById('email'))))
-        {
-
-            return;
-        }*/
 
         if(audioData1 == null || audioData2 == null || audioData3 == null) {
             displayError("Some of the audio data is missing!");

@@ -1,9 +1,5 @@
-/*jslint nomen: true, indent: 2, maxerr: 3 */
-/*global self, buffer */
 (function (worker_instance) {
   "use strict";
-
-  //JavaScript Audio Resampler (c) 2011 - Grant Galitz
 
   var INCORRECT_BUFFER_LENGTH = "Buffer was of incorrect sample length.";
   var INCORRECT_SETTINGS = "Invalid settings specified for the resampler.";
@@ -24,68 +20,46 @@
   }
 
   Resampler.prototype.bypassResampler = function (buffer) {
-    
-    // set the buffer passed as our own, as we don't need to resample it
     if (this.noReturn) {
       this.outputBuffer = buffer;
       return buffer.length;
     }
-    // just return the buffer passsed
     return buffer;
   };
 
   Resampler.prototype.initialize = function () {
     if (this.fromSampleRate == this.toSampleRate) {
-
-      // Setup resampler bypass - Resampler just returns what was passed through
       this.resampler = this.bypassResampler;
       this.ratioWeight = 1;
-
     } else {
       
       if (this.fromSampleRate < this.toSampleRate) {
-
-        // Use generic linear interpolation if upsampling,
-        // as linear interpolation produces a gradient that we want
-        // and works fine with two input sample points per output in this case.
         this.linearInterpolation();
         this.lastWeight = 1;
 
       } else {
-        
-        // Custom resampler I wrote that doesn't skip samples
-        // like standard linear interpolation in high downsampling.
-        // This is more accurate than linear interpolation on downsampling.
         this.multiTap();
         this.tailExists = false;
         this.lastWeight = 0;
       }
-
-      // Initialize the internal buffer:
       this.initializeBuffers();
       this.ratioWeight = this.fromSampleRate / this.toSampleRate;
     }
   };
 
   Resampler.prototype.bufferSlice = function (sliceAmount) {
-
-    // If we're going to access the properties directly from this object:
     if (this.noReturn) {
       return sliceAmount;
     }
-
-    //Typed array and normal array buffer section referencing:
     try {
       return this.outputBuffer.subarray(0, sliceAmount);
     }
     catch (error) {
       try {
-        //Regular array pass:
         this.outputBuffer.length = sliceAmount;
         return this.outputBuffer;
       }
       catch (error) {
-        //Nightly Firefox 4 used to have the subarray function named as slice:
         return this.outputBuffer.slice(0, sliceAmount);
       }
     }

@@ -1,4 +1,3 @@
-//(function(){
     'use strict'
 
     var constraints = {
@@ -112,31 +111,18 @@
 
         $('#error-panel').hide();
 
-
-        $.ajax({
-          url: "/handleaudio/",
-          type: "POST",
-          contentType: 'application/octet-stream',
-          data: audioData1,
-          processData: false,
-          headers: {
-            'X-CSRFTOKEN': csrftoken
-          },
-          success: function(response){
-            $('#result').text(response);
-          },
-          error: function(response){
-            $('#result').text(response.responseText);
-          }
-        });
-
+        var formData = new FormData();
         var userData = JSON.stringify({userName: userName.value, email: email.value});
+        formData.append('userData', userData);
+        formData.append('audio1', audioData1);
+        formData.append('audio2', audioData2);
+        formData.append('audio3', audioData3);
 
         $.ajax({
-          url: "/handleUserNameEmail/",
+          url: "/handleSignUp/",
           type: "POST",
-          contentType: 'application/json',
-          data: userData,
+          contentType: false,
+          data: formData,
           processData: false,
           headers: {
             'X-CSRFTOKEN': csrftoken
@@ -206,4 +192,3 @@
     	$("#file").change(openFile);
     });
 
-//})())

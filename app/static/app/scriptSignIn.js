@@ -84,31 +84,16 @@
 
         $('#error-panel').hide();
 
+        var formData = new FormData();
+        var userName = JSON.stringify({userName: userName.value});
+        formData.append('userName', userName);
+        formData.append('audio', audioData);
 
         $.ajax({
-          url: "/handleaudio/",
+          url: "/handleSignIn/",
           type: "POST",
-          contentType: 'application/octet-stream',
-          data: audioData,
-          processData: false,
-          headers: {
-            'X-CSRFTOKEN': csrftoken
-          },
-          success: function(response){
-            $('#result').text(response);
-          },
-          error: function(response){
-            $('#result').text(response.responseText);
-          }
-        });
-
-        var userData = JSON.stringify({userName: userName.value});
-
-        $.ajax({
-          url: "/handleUserName/",
-          type: "POST",
-          contentType: 'application/json',
-          data: userData,
+          contentType: false,
+          data: formData,
           processData: false,
           headers: {
             'X-CSRFTOKEN': csrftoken

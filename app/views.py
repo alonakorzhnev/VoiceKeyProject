@@ -3,7 +3,8 @@ from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 from django.http.response import HttpResponse
 import scipy.io.wavfile as wav
 import json
-
+from django.conf import settings
+import os
 
 @ensure_csrf_cookie
 def signIn(request):
@@ -15,45 +16,66 @@ def signUp(request):
 
 
 @csrf_exempt
-def handle_audio(request):
+def handleSignIn(request):
     if request.method == 'POST':
         try:
-            data = request.body
+            userData = json.loads(request.POST['userName'])
+            userName = userData['userName']
+            print(userName)
 
-            with open("file_name", 'wb') as f:
-                f.write(data)
+            try:
+                os.mkdir(os.path.join(settings.MEDIA_ROOT, 'testVoice'))
+            except:
+                pass
 
-            fs, audio = wav.read("file_name")
-            wav.write("file_name2", fs, audio)
+            path = os.path.join(settings.MEDIA_ROOT, 'testVoice', 'audio')
+
+            with open(path, 'wb') as destination:
+                for chunk in request.FILES['audio'].chunks():
+                    destination.write(chunk)
+
+            fs, audio = wav.read(path)
+            wav.write(path, fs, audio)
 
             msg = "ok"
         except Exception as err:
-            msg = "failed"
+            msg = str(err)
         return HttpResponse(msg)
 
 
 @csrf_exempt
-def handle_userName(request):
+def handleSignUp(request):
     if request.method == 'POST':
         try:
-            data = json.loads(request.body)
-            print(data['userName'])
+            userData = json.loads(request.POST['userData'])
+            userName = userData['userName']
+            email = userData['email']
+
+            try:
+                os.mkdir(os.path.join(settings.MEDIA_ROOT, userName))
+            except:
+                return HttpResponse("The username already exists")
+
+            for file in request.FILES:
+                try:
+                    os.mkdir(os.path.join(settings.MEDIA_ROOT, userName, 'wav'))
+                except:
+                    pass
+
+                path = os.path.join(settings.MEDIA_ROOT, userName, 'wav', file)
+
+                with open(path, 'wb') as destination:
+                    for chunk in request.FILES[file].chunks():
+                        destination.write(chunk)
+
+                fs, audio = wav.read(path)
+                wav.write(path, fs, audio)
 
             msg = "ok"
         except Exception as err:
-            msg = "failed"
+            msg = str(err)
         return HttpResponse(msg)
 
 
-@csrf_exempt
-def handle_userNameEmail(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            print(data['userName'])
-            print(data['email'])
 
-            msg = "ok"
-        except Exception as err:
-            msg = "failed"
-        return HttpResponse(msg)
+

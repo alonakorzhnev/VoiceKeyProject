@@ -1,4 +1,3 @@
-//(function(){
     'use strict'
 
     var constraints = {
@@ -29,11 +28,23 @@
       return cookieValue;
   }
 
-    function isValidEmailAddress(emailAddress) {
-        displayError(emailAddress);
-        var pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
-        return pattern.test(emailAddress);
-    };
+/*  function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}*/
 
     function startRecording(){
     	$("#file").val("");
@@ -105,86 +116,42 @@
     function submitToServer(){
         var userName = document.getElementById('userName');
         var email = document.getElementById('email');
-        var email2 = $("#email").val();
 
-        if(userName == null || userName.value == ''){
+        if(userName != null && userName.value == ''){
             displayError("There is no user name here!");
             return;
         }
 
-        displayError(email2);
-        var pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if((email2 == null && email2 == '') || !pattern.test(String(email2).toLowerCase())) {
-            displayError("There is no valid email!");
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if(email != null && email.value == ''){
+            displayError("There is no email here!");
             return;
         }
 
-        if(audioData1 == null && audioData2 == null && audioData3 == null) {
+        if(!re.test(email.value)) {
+            displayError("The email is not valid!");
+            return;
+        }
+
+        if(audioData1 == null || audioData2 == null || audioData3 == null) {
             displayError("There is no audio data here!");
             return;
         }
 
         $('#error-panel').hide();
 
-
-        $.ajax({
-          url: "/handleaudio/",
-          type: "POST1",
-          contentType: 'application/octet-stream',
-          data: audioData1,
-          processData: false,
-          headers: {
-            'X-CSRFTOKEN': csrftoken
-          },
-          success: function(response){
-            $('#result').text(response);
-          },
-          error: function(response){
-            $('#result').text(response.responseText);
-          }
-        });
-
-        $.ajax({
-          url: "/handleaudio/",
-          type: "POST2",
-          contentType: 'application/octet-stream',
-          data: audioData2,
-          processData: false,
-          headers: {
-            'X-CSRFTOKEN': csrftoken
-          },
-          success: function(response){
-            $('#result').text(response);
-          },
-          error: function(response){
-            $('#result').text(response.responseText);
-          }
-        });
-
-        $.ajax({
-          url: "/handleaudio/",
-          type: "POST3",
-          contentType: 'application/octet-stream',
-          data: audioData3,
-          processData: false,
-          headers: {
-            'X-CSRFTOKEN': csrftoken
-          },
-          success: function(response){
-            $('#result').text(response);
-          },
-          error: function(response){
-            $('#result').text(response.responseText);
-          }
-        });
-
+        var formData = new FormData();
         var userData = JSON.stringify({userName: userName.value, email: email.value});
+        formData.append('userData', userData);
+        formData.append('audio1', audioData1);
+        formData.append('audio2', audioData2);
+        formData.append('audio3', audioData3);
 
         $.ajax({
-          url: "/handleUserNameEmail/",
+          url: "/handleSignUp/",
           type: "POST",
-          contentType: 'application/json',
-          data: userData,
+          contentType: false,
+          data: formData,
           processData: false,
           headers: {
             'X-CSRFTOKEN': csrftoken
@@ -254,4 +221,3 @@
     	$("#file").change(openFile);
     });
 
-//})())

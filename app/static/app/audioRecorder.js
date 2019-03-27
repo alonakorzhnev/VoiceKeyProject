@@ -1,6 +1,3 @@
-/**
- * Record audio
- */
 (function(window){
 
     function AudioRecorderObject(source) {
@@ -51,7 +48,6 @@
         this.node.onaudioprocess = function(e){
             if (!recording) return;
 
-
             worker.postMessage({
                 command: 'record',
                 buffer: [
@@ -61,8 +57,7 @@
         };
 
         source.connect(this.node);
-        this.node.connect(this.context.destination); //need to check if this is required.
-
+        this.node.connect(this.context.destination);
     }
 
     var audioRecorder =  {

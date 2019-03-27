@@ -6,6 +6,7 @@ import json
 from django.conf import settings
 import os
 
+
 @ensure_csrf_cookie
 def signIn(request):
     return render(request, 'app/signIn.html')
@@ -21,7 +22,9 @@ def handleSignIn(request):
         try:
             userData = json.loads(request.POST['userName'])
             userName = userData['userName']
-            print(userName)
+
+            if not os.path.isdir(os.path.join(settings.MEDIA_ROOT, userName)):
+                return HttpResponse("ERROR: Username or audio data are not correct")
 
             try:
                 os.mkdir(os.path.join(settings.MEDIA_ROOT, 'testVoice'))
@@ -50,6 +53,7 @@ def handleSignUp(request):
             userData = json.loads(request.POST['userData'])
             userName = userData['userName']
             email = userData['email']
+            phrase = userData['phrase']
 
             try:
                 os.mkdir(os.path.join(settings.MEDIA_ROOT, userName))
@@ -59,7 +63,8 @@ def handleSignUp(request):
             path = os.path.join(settings.MEDIA_ROOT, userName)
             file = open(os.path.join(path, 'info.txt'), 'w')
             file.write('Name: ' + userName + '\n')
-            file.write('Email: ' + email)
+            file.write('Email: ' + email + '\n')
+            file.write('Secret Phrase: ' + phrase)
             file.close()
 
             for file in request.FILES:

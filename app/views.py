@@ -53,8 +53,8 @@ def handleSignUp(request):
 
             try:
                 os.mkdir(os.path.join(settings.MEDIA_ROOT, userName))
-            except:
-                return HttpResponse("The username already exists")
+            except Exception as err:
+                return HttpResponse(err)
 
             path = os.path.join(settings.MEDIA_ROOT, userName)
             file = open(os.path.join(path, 'info.txt'), 'w')

@@ -104,7 +104,18 @@
             return;
         }
 
-        if(audioData1 == null) {
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if(email != null && email.value == ''){
+            displayError("There is no email here!");
+            return;
+        }
+
+        if(!re.test(email.value)) {
+            displayError("The email is not valid!");
+            return;
+        }
+
+        if(audioData1 == null || audioData2 == null || audioData3 == null) {
             displayError("There is no audio data here!");
             return;
         }

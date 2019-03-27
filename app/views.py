@@ -56,6 +56,12 @@ def handleSignUp(request):
             except:
                 return HttpResponse("The username already exists")
 
+            path = os.path.join(settings.MEDIA_ROOT, userName)
+            file = open(os.path.join(path, 'info.txt'), 'w')
+            file.write('Name: ' + userName + '\n')
+            file.write('Email: ' + email)
+            file.close()
+
             for file in request.FILES:
                 try:
                     os.mkdir(os.path.join(settings.MEDIA_ROOT, userName, 'wav'))

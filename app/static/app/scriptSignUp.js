@@ -133,6 +133,14 @@ window.onclick = function(event) {
             return;
         }
 
+        var selectPhrase = document.getElementById('dropdown');
+        var phrase = selectPhrase.options[selectPhrase.selectedIndex];
+
+        if(phrase.value=='') {
+            displayError("There is no secret phrase selected!");
+            return;
+        }
+
         if(audioData1 == null || audioData2 == null || audioData3 == null) {
             displayError("There is no audio data here!");
             return;
@@ -141,7 +149,7 @@ window.onclick = function(event) {
         $('#error-panel').hide();
 
         var formData = new FormData();
-        var userData = JSON.stringify({userName: userName.value, email: email.value});
+        var userData = JSON.stringify({userName: userName.value, email: email.value, phrase: phrase.value});
         formData.append('userData', userData);
         formData.append('audio1', audioData1);
         formData.append('audio2', audioData2);

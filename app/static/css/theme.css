@@ -82,40 +82,26 @@ body {
     border-color: blue !important;
 }
 
-.DropDown {
-  background-color: orange !important;
-  color: white !important;
-  padding: 14px !important;
-  font-size: 14px !important;
-  border: none !important;
-    border-radius: 6px !important;
-  cursor: pointer !important;
+.dropdown {
+    background-color: orange;
+    color: white;
+    padding: 14px;
+    font-size: 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
 }
-
-
 
 .dropdown-content {
-  display: block !important;
-  position: absolute;
-  background-color: white !important;
+    display: block !important;
+    position: absolute;
+    background-color: white !important;
     color:black !important;
-  min-width: 160px;
-  overflow: auto;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-    border:none !important;
-
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
 }
-
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.DropDown:focus {
-    outline: none !important;
-}
-
-.show {display: block;}
+.dropDown:focus{
+    outline:none !important;
+ }

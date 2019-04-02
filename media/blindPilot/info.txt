@@ -1,0 +1,3 @@
+Name: blindPilot
+Email: blindPilot@gmail.com
+Secret Phrase: you can activate security system now

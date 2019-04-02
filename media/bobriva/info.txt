@@ -1,0 +1,3 @@
+Name: bobriva
+Email: bobriva@gmail.com
+Secret Phrase: my password is unknown to you

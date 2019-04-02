@@ -105,6 +105,16 @@
             $('#result').text(response.responseText);
           }
         });
+        setTimeout(redirecting,100);
+    }
+
+    function redirecting() {
+        var userName = document.getElementById('userName');
+        var result = $("#result").val();
+        if(String(userName.value)==String(result)) {
+
+            setTimeout(function(){window.location = '/secretPage';}, 100);
+        }
     }
 
     var openFile = function(event) {

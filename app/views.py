@@ -1,10 +1,13 @@
-from django.shortcuts import render
-from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
-from django.http.response import HttpResponse
-import scipy.io.wavfile as wav
-import json
-from django.conf import settings
 import os
+import json
+import scipy.io.wavfile as wav
+from django.conf import settings
+from django.shortcuts import render
+from utils import trainModel, testVoice
+from django.http.response import HttpResponse, HttpResponseRedirect
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
+
+from django.urls import reverse
 
 
 @ensure_csrf_cookie
@@ -16,6 +19,11 @@ def signUp(request):
     return render(request, 'app/signUp.html')
 
 
+@ensure_csrf_cookie
+def secretPage(request):
+    return render(request, 'app/secretPage.html')
+
+
 @csrf_exempt
 def handleSignIn(request):
     if request.method == 'POST':
@@ -23,15 +31,15 @@ def handleSignIn(request):
             userData = json.loads(request.POST['userName'])
             userName = userData['userName']
 
-            if not os.path.isdir(os.path.join(settings.MEDIA_ROOT, userName)):
-                return HttpResponse("ERROR: Username or audio data are not correct")
+            #if not os.path.isdir(os.path.join(settings.MEDIA_ROOT, userName)):
+                #return HttpResponse("ERROR: Username or audio data are not correct")
 
             try:
-                os.mkdir(os.path.join(settings.MEDIA_ROOT, 'testVoice'))
+                os.mkdir(os.path.join(settings.MEDIA_ROOT, 'whoIsIt'))
             except:
                 pass
 
-            path = os.path.join(settings.MEDIA_ROOT, 'testVoice', 'audio')
+            path = os.path.join(settings.MEDIA_ROOT, 'whoIsIt', 'audio')
 
             with open(path, 'wb') as destination:
                 for chunk in request.FILES['audio'].chunks():
@@ -40,7 +48,9 @@ def handleSignIn(request):
             fs, audio = wav.read(path)
             wav.write(path, fs, audio)
 
-            msg = "ok"
+            winner = testVoice.test()
+
+            msg = winner
         except Exception as err:
             msg = str(err)
         return HttpResponse(msg)
@@ -81,6 +91,8 @@ def handleSignUp(request):
 
                 fs, audio = wav.read(path)
                 wav.write(path, fs, audio)
+
+            trainModel.train(userName)
 
             msg = "ok"
         except Exception as err:

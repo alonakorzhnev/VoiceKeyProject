@@ -28,24 +28,6 @@
       return cookieValue;
   }
 
-/*  function myFunction() {
-  document.getElementById("myDropdown").classList.toggle("show");
-}
-
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}*/
-
     function startRecording(){
     	$("#file").val("");
     	if (navigator.mediaDevices.getUserMedia === undefined) {
@@ -136,7 +118,7 @@ window.onclick = function(event) {
         var selectPhrase = document.getElementById('dropdown');
         var phrase = selectPhrase.options[selectPhrase.selectedIndex];
 
-        if(phrase.value=='') {
+        if(phrase.value == ''){
             displayError("There is no secret phrase selected!");
             return;
         }

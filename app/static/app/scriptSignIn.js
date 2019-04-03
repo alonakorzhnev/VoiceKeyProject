@@ -13,6 +13,25 @@
     var interval;
     var flagRecording = true;
 
+    /*$(".nav a").on("click", function(){
+       $(".nav").find(".active").removeClass("active");
+       $(this).parent().addClass("active");
+    });*/
+    $(document).ready(function() {
+        $(this).addClass('active');
+            //$(this).toggleClass('active',
+                //window.location.pathname.indexOf($(this).find('a').attr('href')) > -1);
+        $(this).siblings().removeClass('active');
+        // -----------------------------------------------------------------------
+        //$.each($('#navbar').find('li'), function() {
+            //$(this).addClass('active');
+            //$(this).toggleClass('active',
+                //window.location.pathname.indexOf($(this).find('a').attr('href')) > -1);
+            //$(this).siblings().removeClass('active');
+        //});
+        // -----------------------------------------------------------------------
+    });
+
     function getCookie(name) {
       var cookieValue = null;
       if (document.cookie && document.cookie != '') {
@@ -123,9 +142,8 @@
     }
 
     function redirecting() {
-        var userName = document.getElementById('userName');
         var result = $("#result").val();
-        if(String(userName.value)==String(result)) {
+        if(String(result) == "true") {
 
             setTimeout(function(){window.location = '/secretPage';}, 100);
         }

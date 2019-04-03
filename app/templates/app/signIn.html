@@ -25,24 +25,22 @@
                     <audio controls src=""></audio>
                 </div>
 
-                <button class="button" onclick="toggler()"><i class="fa fa-microphone" aria-hidden="true" id="micButton"></i></button>
-
-            </div>
-            <div class="form-group">
-
-                <label for="file">Or choose audio file</label>
-                <input type="file" class="form-control-file" id="file"/>
+                <p align="center">
+                    <button class="button" onclick="toggler()"><i class="fa fa-microphone" aria-hidden="true" id="micButton"></i></button>
+                </p>
 
             </div>
 
+            <p align="center">
             <button onclick="submitToServer()" id="submitAudio"
                     class="btn btn-primary">Submit</button>
+            </p>
 
      </div>
 </div>
 <div class="result_container form-group">
     <label for="result">Result</label>
-    <textarea name="result" class="form-control" id="result" rows="4"></textarea>
+    <textarea name="result" class="form-control" id="result" rows="1"></textarea>
 </div>
 
 <div id="error-panel" class="alert" role="alert">

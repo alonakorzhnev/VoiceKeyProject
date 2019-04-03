@@ -4,9 +4,10 @@ import scipy.io.wavfile as wav
 from django.conf import settings
 from django.shortcuts import render
 from utils import trainModel, testVoice
-from django.http.response import HttpResponse, HttpResponseRedirect
+from django.http.response import HttpResponse, HttpResponseNotFound
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 
+flagUser = False
 
 @ensure_csrf_cookie
 def signIn(request):
@@ -19,12 +20,15 @@ def signUp(request):
 
 @ensure_csrf_cookie
 def secretPage(request):
-
-    return render(request, 'app/secretPage.html')
+    global flagUser
+    if flagUser:
+        return render(request, 'app/secretPage.html')
+    return HttpResponseNotFound()
 
 
 @csrf_exempt
 def handleSignIn(request):
+    global flagUser
     if request.method == 'POST':
         try:
             userData = json.loads(request.POST['userName'])
@@ -49,7 +53,12 @@ def handleSignIn(request):
 
             winner = testVoice.test()
 
-            msg = winner
+            if(winner == userName):
+                flagUser = True
+                return HttpResponse("true")
+
+            flagUser = False
+            msg = "DEBUG ERROR: Winner="+winner
         except Exception as err:
             msg = str(err)
         return HttpResponse(msg)

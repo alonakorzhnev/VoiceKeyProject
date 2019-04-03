@@ -30,7 +30,6 @@
       return cookieValue;
   }
 
-
     function toggler(){
         if(flagRecording){
             startRecording();
@@ -43,7 +42,6 @@
     }
 
     function startRecording(){
-        //micButton.style.color = "red";
     	$("#file").val("");
     	if (navigator.mediaDevices.getUserMedia === undefined) {
     		displayError("This browser doesn't support getUserMedia.");
@@ -57,6 +55,11 @@
             var source = audioContext.createMediaStreamSource(stream);
             recorder = audioRecorder.fromSource(source);
             recorder.record();
+            if($('#ws-radio').prop('checked') && !socket){
+            	initWebSocket();
+            } else if(socket){
+            	closeWebSocket();
+            }
         })
         .catch(function(err){
         	displayError("Error occurred while getting audio stream: " + err);
@@ -115,6 +118,16 @@
             $('#result').text(response.responseText);
           }
         });
+        setTimeout(redirecting,100);
+    }
+
+    function redirecting() {
+        var userName = document.getElementById('userName');
+        var result = $("#result").val();
+        if(String(userName.value)==String(result)) {
+
+            setTimeout(function(){window.location = '/secretPage';}, 100);
+        }
     }
 
     var openFile = function(event) {

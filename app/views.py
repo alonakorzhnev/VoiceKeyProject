@@ -49,9 +49,6 @@ def handleSignIn(request):
 
             winner = testVoice.test()
 
-            #if winner == userName:
-                #return HttpResponseRedirect('/secretPage/')
-
             msg = winner
         except Exception as err:
             msg = str(err)

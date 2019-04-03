@@ -44,6 +44,8 @@
     }
 
     function startRecording(){
+        document.getElementById("micButton").style.color="#FF0000";
+        //micButton.style.background='red';
     	$("#file").val("");
     	if (navigator.mediaDevices.getUserMedia === undefined) {
     		displayError("This browser doesn't support getUserMedia.");
@@ -69,6 +71,7 @@
     }
 
     function stopRecording(){
+        document.getElementById("micButton").style.color="#FFFFFF";
     	recorder.stop();
     	clearInterval(interval);
         recorder.exportWAV(function(blob){

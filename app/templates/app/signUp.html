@@ -39,15 +39,17 @@
                 </div>
 
                 <br>
+                <br>
 
-                <label for="player">Record your security phrase 3 times</label>
+                <label for="player">Read the phrase above three times to enroll your voice.</label>
+
+                <br>
+
+                <button class="button" onclick="toggler()"><i class="fa fa-microphone" aria-hidden="true" id="micButton"></i></button>
 
                 <div id="player1">
                     <audio controls src=""></audio>
                 </div>
-
-                <button onclick="startRecording()" class="btn btn-record"><i class="fas fa-microphone"></i></button>
-                <button onclick="stopRecording(1)" class="btn btn-stop"><span class="glyphicon glyphicon-stop"></span></button>
 
                 <br>
 
@@ -55,17 +57,12 @@
                     <audio controls src=""></audio>
                 </div>
 
-                <button onclick="startRecording()" class="btn btn-record"><i class="fas fa-microphone"></i></button>
-                <button onclick="stopRecording(2)" class="btn btn-stop"><span class="glyphicon glyphicon-stop"></span></button>
-
                 <br>
 
                 <div id="player3">
                     <audio controls src=""></audio>
                 </div>
 
-                <button onclick="startRecording()" class="btn btn-record"><i class="fas fa-microphone"></i></button>
-                <button onclick="stopRecording(3)" class="btn btn-stop"><span class="glyphicon glyphicon-stop"></span></button>
 
             </div>
 
@@ -74,7 +71,7 @@
                 <input type="file" class="form-control-file" id="file" multiple/>
             </div>
 
-            <button onclick="submitToServer()" id="submitAudio" class="btn btn-primary">Submit Audio</button>
+            <button onclick="submitToServer()" id="submitAudio" class="btn btn-primary">Submit</button>
 
      </div>
 </div>

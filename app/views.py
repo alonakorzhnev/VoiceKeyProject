@@ -7,8 +7,6 @@ from utils import trainModel, testVoice
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 
-from django.urls import reverse
-
 
 @ensure_csrf_cookie
 def signIn(request):
@@ -21,6 +19,7 @@ def signUp(request):
 
 @ensure_csrf_cookie
 def secretPage(request):
+
     return render(request, 'app/secretPage.html')
 
 

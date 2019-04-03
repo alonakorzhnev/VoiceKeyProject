@@ -12,7 +12,6 @@
     var socket = null;
     var interval;
     var flagRecording = true;
-    var micButton = document.getElementById('micButton');
 
     function getCookie(name) {
       var cookieValue = null;
@@ -30,8 +29,6 @@
       return cookieValue;
   }
 
-
-
     function toggler(){
         if(flagRecording){
             startRecording();
@@ -44,8 +41,7 @@
     }
 
     function startRecording(){
-        document.getElementById("micButton").style.color="#FF0000";
-        //micButton.style.background='red';
+        document.getElementById('micButton').style.color = '#FF0000';
     	$("#file").val("");
     	if (navigator.mediaDevices.getUserMedia === undefined) {
     		displayError("This browser doesn't support getUserMedia.");
@@ -71,7 +67,7 @@
     }
 
     function stopRecording(){
-        document.getElementById("micButton").style.color="#FFFFFF";
+        document.getElementById('micButton').style.color = '#FFFFFF';
     	recorder.stop();
     	clearInterval(interval);
         recorder.exportWAV(function(blob){

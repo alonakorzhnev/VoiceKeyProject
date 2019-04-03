@@ -117,10 +117,8 @@
     }
 
     function redirecting() {
-        var userName = document.getElementById('userName');
         var result = $("#result").val();
-        if(String(userName.value)==String(result)) {
-
+        if(String(result) == 'true') {
             setTimeout(function(){window.location = '/secretPage';}, 100);
         }
     }

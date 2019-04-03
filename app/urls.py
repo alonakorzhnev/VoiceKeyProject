@@ -6,6 +6,7 @@ urlpatterns = [
     path('handleSignIn/', views.handleSignIn, name='handleSignIn'),
     path('handleSignUp/', views.handleSignUp, name='handleSignUp'),
     path('secretPage/', views.secretPage, name='secretPage'),
-    path('signUp.html/', views.signUp, name='signUp'),
-    path('signIn.html/', views.signIn, name='signIn')
+    path('signUp/', views.signUp, name='signUp'),
+    path('signIn/', views.signIn, name='signIn'),
+    path('signOut/', views.signOut, name='signOut')
 ]

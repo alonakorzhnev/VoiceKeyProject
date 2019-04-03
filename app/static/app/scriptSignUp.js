@@ -12,6 +12,8 @@
     var csrftoken = getCookie('csrftoken');
     var socket = null;
     var interval;
+    var flagRecording = true;
+    var flagAudioNum = 1
 
     function getCookie(name) {
       var cookieValue = null;
@@ -27,6 +29,18 @@
       }
       return cookieValue;
   }
+
+    function toggler(){
+        if(flagRecording){
+            startRecording();
+            flagRecording = false;
+        }
+        else {
+            stopRecording(flagAudioNum);
+            flagRecording = true;
+            flagAudioNum += 1;
+        }
+    }
 
     function startRecording(){
     	$("#file").val("");

@@ -11,6 +11,8 @@
     var csrftoken = getCookie('csrftoken');
     var socket = null;
     var interval;
+    var flagRecording = true;
+    var micButton = document.getElementById('micButton');
 
     function getCookie(name) {
       var cookieValue = null;
@@ -28,7 +30,20 @@
       return cookieValue;
   }
 
+
+    function toggler(){
+        if(flagRecording){
+            startRecording();
+            flagRecording = false;
+        }
+        else {
+            stopRecording();
+            flagRecording = true;
+        }
+    }
+
     function startRecording(){
+        //micButton.style.color = "red";
     	$("#file").val("");
     	if (navigator.mediaDevices.getUserMedia === undefined) {
     		displayError("This browser doesn't support getUserMedia.");
@@ -42,11 +57,6 @@
             var source = audioContext.createMediaStreamSource(stream);
             recorder = audioRecorder.fromSource(source);
             recorder.record();
-            if($('#ws-radio').prop('checked') && !socket){
-            	initWebSocket();
-            } else if(socket){
-            	closeWebSocket();
-            }
         })
         .catch(function(err){
         	displayError("Error occurred while getting audio stream: " + err);

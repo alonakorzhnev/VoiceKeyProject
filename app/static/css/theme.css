@@ -66,18 +66,6 @@ body {
     border-color: orange !important;
 }
 
-.btn-record{
-    color:white !important;
-    background-color: red !important;
-    border-color: red !important;
-}
-
-.btn-stop{
-    color:white !important;
-    background-color: blue !important;
-    border-color: blue !important;
-}
-
 .dropdown {
     background-color: orange;
     color: white;
@@ -101,3 +89,19 @@ body {
 .dropdown:focus{
     outline:none !important;
  }
+
+
+
+.button {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    padding-bottom: 0.6em;
+}
+
+#micbutton {
+    font-size: 90px !important;
+}

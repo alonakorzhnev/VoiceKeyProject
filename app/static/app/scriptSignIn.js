@@ -11,6 +11,8 @@
     var csrftoken = getCookie('csrftoken');
     var socket = null;
     var interval;
+    var flagRecording = true;
+    var micButton = document.getElementById('micButton');
 
     function getCookie(name) {
       var cookieValue = null;
@@ -27,6 +29,19 @@
       }
       return cookieValue;
   }
+
+
+
+    function toggler(){
+        if(flagRecording){
+            startRecording();
+            flagRecording = false;
+        }
+        else {
+            stopRecording();
+            flagRecording = true;
+        }
+    }
 
     function startRecording(){
     	$("#file").val("");

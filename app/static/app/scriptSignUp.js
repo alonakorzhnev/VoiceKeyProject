@@ -65,9 +65,11 @@
 
     function stopRecording(numRecord){
         document.getElementById('micButton').style.color = '#FFFFFF';
+
     	recorder.stop();
     	clearInterval(interval);
     	if(numRecord == 1){
+    	    document.getElementById('checkCircle1').style.color='orange';
     	    recorder.exportWAV(function(blob){
                 audioStream.getTracks()[0].stop();
                 audioStream = null;
@@ -82,6 +84,7 @@
             recorder.clear();
         }
     	else if(numRecord == 2){
+    	    document.getElementById('checkCircle2').style.color='orange';
     	    recorder.exportWAV(function(blob){
                 audioStream.getTracks()[0].stop();
                 audioStream = null;
@@ -95,7 +98,8 @@
             }, true);
             recorder.clear();
         }
-    	else{
+    	else if(numRecord == 3){
+    	    document.getElementById('checkCircle3').style.color='orange';
     	    recorder.exportWAV(function(blob){
                 audioStream.getTracks()[0].stop();
                 audioStream = null;
@@ -108,6 +112,7 @@
                 $('#player3').append(mt);
             }, true);
             recorder.clear();
+            document.getElementById('recordButton').disabled=true;
         }
     }
 

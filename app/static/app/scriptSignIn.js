@@ -9,7 +9,6 @@
     var audioData = null;
     var audioContext = null;
     var csrftoken = getCookie('csrftoken');
-    var socket = null;
     var interval;
     var flagRecording = true;
 
@@ -55,11 +54,6 @@
             var source = audioContext.createMediaStreamSource(stream);
             recorder = audioRecorder.fromSource(source);
             recorder.record();
-            if($('#ws-radio').prop('checked') && !socket){
-            	initWebSocket();
-            } else if(socket){
-            	closeWebSocket();
-            }
         })
         .catch(function(err){
         	displayError("Error occurred while getting audio stream: " + err);

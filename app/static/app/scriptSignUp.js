@@ -10,7 +10,6 @@
     var audioData3 = null;
     var audioContext = null;
     var csrftoken = getCookie('csrftoken');
-    var socket = null;
     var interval;
     var flagRecording = true;
     var flagAudioNum = 1

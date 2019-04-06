@@ -12,6 +12,7 @@
     var interval;
     var flagRecording = true;
 
+
     function getCookie(name) {
       var cookieValue = null;
       if (document.cookie && document.cookie != '') {
@@ -40,6 +41,7 @@
     }
 
     function startRecording(){
+        microphone.start()
         document.getElementById('micButton').style.color = '#FF0000';
     	$("#file").val("");
     	if (navigator.mediaDevices.getUserMedia === undefined) {
@@ -61,6 +63,7 @@
     }
 
     function stopRecording(){
+        microphone.stop();
         document.getElementById('micButton').style.color = '#FFFFFF';
     	recorder.stop();
     	clearInterval(interval);

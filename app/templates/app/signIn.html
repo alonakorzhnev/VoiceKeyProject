@@ -25,6 +25,8 @@
 
                 <br>
 
+                <div id="waveform"></div>
+
                 <p align="center">
                     <button class="button" onclick="toggler()"><i class="fa fa-microphone" aria-hidden="true" id="micButton"></i></button>
 
@@ -32,6 +34,27 @@
                         <audio controls src=""></audio>
                     </div>
                 </p>
+
+                <script>
+                    var wavesurfer = WaveSurfer.create({
+                        container: '#waveform',
+                        waveColor: 'orange',
+                        barHeight: 2
+                    });
+
+                    var microphone = Object.create(WaveSurfer.Microphone);
+
+                    microphone.init({
+                        wavesurfer: wavesurfer
+                    });
+
+                    microphone.on('deviceReady', function(stream) {
+                        console.log('Device ready!', stream);
+                    });
+                    microphone.on('deviceError', function(code) {
+                        console.warn('Device error: ' + code);
+                    });
+                </script>
 
             </div>
 
@@ -52,7 +75,7 @@
 
 <div class="card-footer">
     <div class="d-flex justify-content-center links">
-        Don't have an account?<a href="/signUp.html">Sign Up</a>
+        Don't have an account?<a href="/signUp">Sign Up</a>
     </div>
     <div class="d-flex justify-content-center">
         <a href="#">Forgot your password?</a>

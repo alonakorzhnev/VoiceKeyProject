@@ -116,3 +116,10 @@ body {
 #micButton {
     font-size: 100px !important;
 }
+
+
+#waveform {
+  height: 100px;
+  width: 100%;
+  background-color: transparent;
+}

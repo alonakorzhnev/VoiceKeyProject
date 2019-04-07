@@ -15,9 +15,6 @@ flagUser = False
 def signIn(request):
     return render(request, 'app/signIn.html')
 
-@ensure_csrf_cookie
-def test(request):
-    return render(request, 'app/test.html')
 
 @ensure_csrf_cookie
 def signUp(request):

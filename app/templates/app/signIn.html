@@ -37,23 +37,35 @@
 
                 <script>
                     var wavesurfer = WaveSurfer.create({
-                        container: '#waveform',
-                        waveColor: 'orange',
-                        barHeight: 2
+                        container     : '#waveform',
+                        waveColor     : 'orange',
+                        interact      : false,
+                        cursorWidth   : 0,
+                        barHeight: 2,
+                        plugins: [
+                            WaveSurfer.microphone.create({})
+                        ]
                     });
 
-                    var microphone = Object.create(WaveSurfer.Microphone);
-
-                    microphone.init({
-                        wavesurfer: wavesurfer
-                    });
-
-                    microphone.on('deviceReady', function(stream) {
+                    wavesurfer.microphone.on('deviceReady', function(stream) {
                         console.log('Device ready!', stream);
                     });
-                    microphone.on('deviceError', function(code) {
+                    wavesurfer.microphone.on('deviceError', function(code) {
                         console.warn('Device error: ' + code);
                     });
+
+                    //var microphone = Object.create(WaveSurfer.Microphone);
+
+                    //microphone.init({
+                        //wavesurfer: wavesurfer
+                    //});
+
+                    //microphone.on('deviceReady', function(stream) {
+                        //console.log('Device ready!', stream);
+                    //});
+                    //microphone.on('deviceError', function(code) {
+                        //console.warn('Device error: ' + code);
+                    //});
                 </script>
 
             </div>

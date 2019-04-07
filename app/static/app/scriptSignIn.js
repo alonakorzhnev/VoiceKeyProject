@@ -41,7 +41,8 @@
     }
 
     function startRecording(){
-        microphone.start()
+        //microphone.start()
+        wavesurfer.microphone.start();
         document.getElementById('micButton').style.color = '#FF0000';
     	$("#file").val("");
     	if (navigator.mediaDevices.getUserMedia === undefined) {
@@ -63,7 +64,8 @@
     }
 
     function stopRecording(){
-        microphone.stop();
+        //microphone.stop();
+        wavesurfer.microphone.stop();
         document.getElementById('micButton').style.color = '#FFFFFF';
     	recorder.stop();
     	clearInterval(interval);

@@ -1,18 +1,20 @@
 {% extends "app/base.html" %}
 {% block content %}
-
 {% load bootstrap3 %}
+
 <script src="/static/app/scriptSignIn.js" type="text/javascript"></script>
+
 <div class="card-header">
     <h2>Sign In</h2>
 </div>
+
 <div class="card-body">
      <div class="form-main">
             <div class="form-group">
 
                 <br>
 
-                <label>Enter User name:</label>
+                <h4>Enter User name:</h4>
                 <br>
                 <div class="input-group">
                     <span class="input-group-addon user"><span class="glyphicon glyphicon-user"></span></span>
@@ -21,58 +23,41 @@
 
                 <br>
 
-                <label for="player">Record your security phrase:</label>
+                <h4 for="player">Record your security phrase:</h4>
 
                 <br>
 
-                <div id="waveform"></div>
+                <div class="container" style="height: 60px">
+                    <div id="bars">
+                      <div class="bar"></div>
+                      <div class="bar"></div>
+                      <div class="bar"></div>
+                      <div class="bar"></div>
+                      <div class="bar"></div>
+                      <div class="bar"></div>
+                      <div class="bar"></div>
+                      <div class="bar"></div>
+                      <div class="bar"></div>
+                      <div class="bar"></div>
+                    </div>
+                </div>
+
+                <br>
 
                 <p align="center">
                     <button class="button" onclick="toggler()"><i class="fa fa-microphone" aria-hidden="true" id="micButton"></i></button>
 
-                    <div id="player">
+                    <!--<div id="player">
                         <audio controls src=""></audio>
-                    </div>
+                    </div>-->
                 </p>
-
-                <script>
-                    var wavesurfer = WaveSurfer.create({
-                        container     : '#waveform',
-                        waveColor     : 'orange',
-                        interact      : false,
-                        cursorWidth   : 0,
-                        barHeight: 2,
-                        plugins: [
-                            WaveSurfer.microphone.create({})
-                        ]
-                    });
-
-                    wavesurfer.microphone.on('deviceReady', function(stream) {
-                        console.log('Device ready!', stream);
-                    });
-                    wavesurfer.microphone.on('deviceError', function(code) {
-                        console.warn('Device error: ' + code);
-                    });
-
-                    //var microphone = Object.create(WaveSurfer.Microphone);
-
-                    //microphone.init({
-                        //wavesurfer: wavesurfer
-                    //});
-
-                    //microphone.on('deviceReady', function(stream) {
-                        //console.log('Device ready!', stream);
-                    //});
-                    //microphone.on('deviceError', function(code) {
-                        //console.warn('Device error: ' + code);
-                    //});
-                </script>
 
             </div>
 
             <p align="center">
                 <button onclick="submitToServer()" id="submitAudio" class="btn btn-primary">Submit</button>
             </p>
+
 
      </div>
 </div>
@@ -86,11 +71,9 @@
 </div>
 
 <div class="card-footer">
-    <div class="d-flex justify-content-center links">
-        Don't have an account?<a href="/signUp">Sign Up</a>
-    </div>
+    <div class="d-flex justify-content-center links" style="font-size: 16px">Don't have an account?<a href="/signUp">Sign Up</a></div>
     <div class="d-flex justify-content-center">
-        <a href="#">Forgot your password?</a>
+        <a href="#" style="font-size: 16px">Forgot your password?</a>
     </div>
 </div>
 {% endblock %}

@@ -14,6 +14,10 @@
     var flagRecording = true;
     var flagAudioNum = 1
 
+    $(document).ready(function() {
+        $('.bar').css('background', 'transparent');
+    })
+
     function getCookie(name) {
       var cookieValue = null;
       if (document.cookie && document.cookie != '') {
@@ -33,11 +37,13 @@
         if(flagRecording){
             startRecording();
             flagRecording = false;
+            $('.bar').css('background', 'orange');
         }
         else {
             stopRecording(flagAudioNum);
             flagRecording = true;
             flagAudioNum += 1;
+            $('.bar').css('background', 'transparent');
         }
     }
 

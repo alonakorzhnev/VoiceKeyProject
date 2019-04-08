@@ -13,12 +13,12 @@ flagUser = False
 
 @ensure_csrf_cookie
 def signIn(request):
-    return render(request, 'app/signIn.html')
+    return render(request, 'app/signIn.html', {'nbar': 'signIn'})
 
 
 @ensure_csrf_cookie
 def signUp(request):
-    return render(request, 'app/signUp.html')
+    return render(request, 'app/signUp.html', {'nbar': 'signUp'})
 
 
 @ensure_csrf_cookie

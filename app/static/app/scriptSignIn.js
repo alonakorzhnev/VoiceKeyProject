@@ -9,28 +9,8 @@
     var audioData = null;
     var audioContext = null;
     var csrftoken = getCookie('csrftoken');
-    var socket = null;
     var interval;
     var flagRecording = true;
-
-    /*$(".nav a").on("click", function(){
-       $(".nav").find(".active").removeClass("active");
-       $(this).parent().addClass("active");
-    });*/
-    $(document).ready(function() {
-        $(this).addClass('active');
-            //$(this).toggleClass('active',
-                //window.location.pathname.indexOf($(this).find('a').attr('href')) > -1);
-        $(this).siblings().removeClass('active');
-        // -----------------------------------------------------------------------
-        //$.each($('#navbar').find('li'), function() {
-            //$(this).addClass('active');
-            //$(this).toggleClass('active',
-                //window.location.pathname.indexOf($(this).find('a').attr('href')) > -1);
-            //$(this).siblings().removeClass('active');
-        //});
-        // -----------------------------------------------------------------------
-    });
 
     function getCookie(name) {
       var cookieValue = null;
@@ -74,11 +54,6 @@
             var source = audioContext.createMediaStreamSource(stream);
             recorder = audioRecorder.fromSource(source);
             recorder.record();
-            if($('#ws-radio').prop('checked') && !socket){
-            	initWebSocket();
-            } else if(socket){
-            	closeWebSocket();
-            }
         })
         .catch(function(err){
         	displayError("Error occurred while getting audio stream: " + err);
@@ -143,8 +118,7 @@
 
     function redirecting() {
         var result = $("#result").val();
-        if(String(result) == "true") {
-
+        if(String(result) == 'true') {
             setTimeout(function(){window.location = '/secretPage';}, 100);
         }
     }

@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app.apps.AppConfig',
     'bootstrap3',
-
+    'sslserver',
 ]
 
 MIDDLEWARE = [

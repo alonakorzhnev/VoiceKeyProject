@@ -14,17 +14,9 @@
     var flagRecording = true;
     var flagAudioNum = 1
 
-
     $(document).ready(function() {
-        // -----------------------------------------------------------------------
-        $.each($('#navbar').find('li'), function() {
-            $(this).addClass('active');
-            //$(this).toggleClass('active',
-                //window.location.pathname.indexOf($(this).find('a').attr('href')) > -1);
-            $(this).siblings().removeClass('active');
-        });
-        // -----------------------------------------------------------------------
-    });
+        $('.bar').css('background', 'transparent');
+    })
 
     function getCookie(name) {
       var cookieValue = null;
@@ -45,11 +37,13 @@
         if(flagRecording){
             startRecording();
             flagRecording = false;
+            $('.bar').css('background', 'orange');
         }
         else {
             stopRecording(flagAudioNum);
             flagRecording = true;
             flagAudioNum += 1;
+            $('.bar').css('background', 'transparent');
         }
     }
 

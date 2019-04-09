@@ -12,30 +12,36 @@
     var interval;
     var flagRecording = true;
 
+    $(document).ready(function() {
+        $('.bar').css('background', 'transparent');
+    });
+
     function getCookie(name) {
-      var cookieValue = null;
-      if (document.cookie && document.cookie != '') {
-          var cookies = document.cookie.split(';');
-          for (var i = 0; i < cookies.length; i++) {
-              var cookie = cookies[i].trim();
-              // Does this cookie string begin with the name we want?
-              if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                  break;
-              }
-          }
-      }
-      return cookieValue;
-  }
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
 
     function toggler(){
         if(flagRecording){
             startRecording();
             flagRecording = false;
+            $('.bar').css('background', 'orange');
         }
         else {
             stopRecording();
             flagRecording = true;
+            $('.bar').css('background', 'transparent');
         }
     }
 
@@ -61,6 +67,7 @@
     }
 
     function stopRecording(){
+
         document.getElementById('micButton').style.color = '#FFFFFF';
     	recorder.stop();
     	clearInterval(interval);

@@ -1,3 +1,0 @@
-Name: bennmann
-Email: bennmann@gmail.com
-Secret Phrase: my password is unknown to you

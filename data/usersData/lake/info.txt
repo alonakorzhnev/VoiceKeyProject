@@ -1,0 +1,3 @@
+Name: lake
+Email: lake@gmail.com
+Secret Phrase: my voice is stronger than passwords

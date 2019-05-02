@@ -1,0 +1,3 @@
+Name: madison
+Email: madison@gmail.com
+Secret Phrase: you can get in without your password

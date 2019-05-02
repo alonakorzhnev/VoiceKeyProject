@@ -12,7 +12,40 @@
     var csrftoken = getCookie('csrftoken');
     var interval;
     var flagRecording = true;
-    var flagAudioNum = 1
+    var flagAudioNum = 1;
+
+
+    try {
+        var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        var recognition = new SpeechRecognition();
+    }
+    catch(e) {
+        console.error(e);
+        $('.no-browser-support').show();
+        $('.app').hide();
+    }
+
+    recognition.continuous = true;
+
+    recognition.onresult = function(event) {
+        $('#error-panel').hide();
+        var current = event.resultIndex;
+        var transcript = event.results[current][0].transcript;
+        $('#result').text(transcript);
+
+        var selectPhrase = document.getElementById('dropdown');
+        var phrase = selectPhrase.options[selectPhrase.selectedIndex];
+
+        if(phrase.value != transcript) {
+            displayError("Your phrase does not match the selected. Please try again!");
+            flagRecording = true;
+            return;
+        }
+
+        saveRecords(flagAudioNum);
+        flagRecording = true;
+        flagAudioNum += 1;
+    };
 
     $(document).ready(function() {
         $('.bar').css('background', 'transparent');
@@ -31,23 +64,32 @@
           }
       }
       return cookieValue;
-  }
+    }
 
     function toggler(){
         if(flagRecording){
             startRecording();
-            flagRecording = false;
-            $('.bar').css('background', 'orange');
         }
         else {
-            stopRecording(flagAudioNum);
-            flagRecording = true;
-            flagAudioNum += 1;
-            $('.bar').css('background', 'transparent');
+            stopRecording();
         }
     }
 
     function startRecording(){
+        $('#error-panel').hide();
+        var selectPhrase = document.getElementById('dropdown');
+        var phrase = selectPhrase.options[selectPhrase.selectedIndex];
+
+        if(phrase.value == ''){
+            displayError("Please choose the secret phrase!");
+            flagRecording = true
+            return;
+        }
+
+        $('.bar').css('background', 'orange');
+
+        recognition.start();
+
         document.getElementById('micButton').style.color = '#FF0000';
     	$("#file").val("");
     	if (navigator.mediaDevices.getUserMedia === undefined) {
@@ -66,13 +108,19 @@
         .catch(function(err){
         	displayError("Error occurred while getting audio stream: " + err);
         })
+
+        flagRecording = false;
     }
 
-    function stopRecording(numRecord){
+    function stopRecording(){
+        $('.bar').css('background', 'transparent');
+        recognition.stop();
+        recorder.stop();
         document.getElementById('micButton').style.color = '#FFFFFF';
+    }
 
-    	recorder.stop();
-    	clearInterval(interval);
+    function saveRecords(numRecord){
+        clearInterval(interval);
     	if(numRecord == 1){
     	    document.getElementById('checkCircle1').style.color='orange';
     	    recorder.exportWAV(function(blob){
@@ -124,6 +172,8 @@
     function submitToServer(){
         var userName = document.getElementById('userName');
         var email = document.getElementById('email');
+        var selectPhrase = document.getElementById('dropdown');
+        var phrase = selectPhrase.options[selectPhrase.selectedIndex];
 
         if(userName != null && userName.value == ''){
             displayError("There is no user name here!");
@@ -138,14 +188,6 @@
 
         if(!re.test(email.value)) {
             displayError("The email is not valid!");
-            return;
-        }
-
-        var selectPhrase = document.getElementById('dropdown');
-        var phrase = selectPhrase.options[selectPhrase.selectedIndex];
-
-        if(phrase.value == ''){
-            displayError("There is no secret phrase selected!");
             return;
         }
 
@@ -173,7 +215,10 @@
             'X-CSRFTOKEN': csrftoken
           },
           success: function(response){
-            $('#result').text(response);
+              $('#result').text(response);
+              if(String($("#result").val()) == 'Successful SignUp') {
+                  setTimeout(function(){window.location.assign('/signIn');}, 2000);
+              }
           },
           error: function(response){
             $('#result').text(response.responseText);

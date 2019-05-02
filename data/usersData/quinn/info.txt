@@ -1,0 +1,3 @@
+Name: quinn
+Email: quinn@gmail.com
+Secret Phrase: my password is unknown to you

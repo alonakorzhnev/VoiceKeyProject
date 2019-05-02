@@ -1,0 +1,3 @@
+Name: pat
+Email: pat@gmail.com
+Secret Phrase: my voice is stronger than passwords

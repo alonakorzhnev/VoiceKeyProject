@@ -55,18 +55,13 @@
             'X-CSRFTOKEN': csrftoken
           },
           success: function(response){
-            $('#result').text(response);
+              $('#result').text(response);
+              if(String($("#result").val()) == 'Secret phrase is successfully sent to your email') {
+                  setTimeout(function(){window.location.assign('/signIn');}, 2000);
+              }
           },
           error: function(response){
             $('#result').text(response.responseText);
           }
         });
-        setTimeout(redirecting,100);
    }
-
-   function redirecting() {
-        var result = $("#result").val();
-        if(String(result) == "ok") {
-            setTimeout(function(){window.location.href = '/signIn';}, 100);
-        }
-    }

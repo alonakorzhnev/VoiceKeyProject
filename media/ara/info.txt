@@ -1,3 +1,0 @@
-Name: ara
-Email: ara@gmail.com
-Secret Phrase: houston we have had a problem

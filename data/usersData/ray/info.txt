@@ -1,0 +1,3 @@
+Name: ray
+Email: ray@gmail.com
+Secret Phrase: my password is unknown to you

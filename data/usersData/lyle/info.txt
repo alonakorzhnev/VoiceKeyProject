@@ -1,0 +1,3 @@
+Name: lyle
+Email: lyle@gmail.com
+Secret Phrase: my password is unknown to you

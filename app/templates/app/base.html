@@ -45,6 +45,7 @@
                       <ul class="nav navbar-nav">
                             <li class="{% if nbar == 'signIn' %}active{% endif %}"><a href={% url 'signIn' %}>Sign In</a></li>
                             <li class="{% if nbar == 'signUp' %}active{% endif %}"><a href={% url 'signUp' %}>Sign Up</a></li>
+                            <li class="{% if nbar == 'secret' %}active{% endif %}"><a href={% url 'secretPage' %}>Secret page</a></li>
                       </ul>
                       <ul class="nav navbar-nav navbar-right">
                             <li><a href={% url 'signOut' %}><span class="glyphicon glyphicon-log-out"></span> Sign Out</a></li>

@@ -1,5 +1,4 @@
-//(function(){
-    'use strict'
+'use strict'
 
     var constraints = {
             audio : true,
@@ -67,7 +66,6 @@
     }
 
     function stopRecording(){
-
         document.getElementById('micButton').style.color = '#FFFFFF';
     	recorder.stop();
     	clearInterval(interval);
@@ -114,20 +112,15 @@
             'X-CSRFTOKEN': csrftoken
           },
           success: function(response){
-            $('#result').text(response);
+              $('#result').text(response);
+              if(String($("#result").val()) == 'Successful SignIn') {
+                  setTimeout(function(){window.location.assign('/secretPage');}, 2000);
+              }
           },
           error: function(response){
             $('#result').text(response.responseText);
           }
         });
-        setTimeout(redirecting,100);
-    }
-
-    function redirecting() {
-        var result = $("#result").val();
-        if(String(result) == 'true') {
-            setTimeout(function(){window.location = '/secretPage';}, 100);
-        }
     }
 
     var openFile = function(event) {
@@ -145,14 +138,14 @@
         $('#player')[0].innerHTML = "";
         $('#player').append(mt);
     };
-    
+
     function checkValidity(file){
     	var isValid = false;
     	var allowedFileTypes = ['audio/x-wav', 'audio/wav'];
     	isValid = allowedFileTypes.includes(file.type);
     	return isValid;
     }
-    
+
     function displayError(errorMsg){
     	$('#error-panel').addClass('alert-danger');
         $('#error-message').text(errorMsg);
@@ -164,4 +157,3 @@
     	$("#file").change(openFile);
     });
 
-//})())

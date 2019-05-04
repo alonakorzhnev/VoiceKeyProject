@@ -13,6 +13,7 @@
     var interval;
     var flagRecording = true;
     var flagAudioNum = 1;
+    var recogPhrase = '';
 
 
     try {
@@ -28,28 +29,27 @@
     recognition.continuous = true;
 
     recognition.onresult = function(event) {
-        $('#error-panel').hide();
         var current = event.resultIndex;
         var transcript = event.results[current][0].transcript;
-        $('#result').text(transcript);
+        recogPhrase += transcript;
+        $('#result').text(recogPhrase);
 
         var selectPhrase = document.getElementById('dropdown');
         var phrase = selectPhrase.options[selectPhrase.selectedIndex];
 
-        if(phrase.value != transcript) {
+
+        if(phrase.value != $("#result").val()) {
             displayError("Your phrase does not match the selected. Please try again!");
-            flagRecording = true;
             return;
         }
 
         saveRecords(flagAudioNum);
-        flagRecording = true;
         flagAudioNum += 1;
     };
 
     $(document).ready(function() {
         $('.bar').css('background', 'transparent');
-    })
+    });
 
     function getCookie(name) {
       var cookieValue = null;
@@ -70,19 +70,24 @@
         if(flagRecording){
             startRecording();
         }
-        else {
+        else{
             stopRecording();
         }
     }
 
     function startRecording(){
+        recogPhrase = '';
+        $('#result').text('');
+
         $('#error-panel').hide();
+
+
         var selectPhrase = document.getElementById('dropdown');
         var phrase = selectPhrase.options[selectPhrase.selectedIndex];
 
         if(phrase.value == ''){
             displayError("Please choose the secret phrase!");
-            flagRecording = true
+            flagRecording = true;
             return;
         }
 
@@ -91,6 +96,7 @@
         recognition.start();
 
         document.getElementById('micButton').style.color = '#FF0000';
+
     	$("#file").val("");
     	if (navigator.mediaDevices.getUserMedia === undefined) {
     		displayError("This browser doesn't support getUserMedia.");
@@ -107,19 +113,26 @@
         })
         .catch(function(err){
         	displayError("Error occurred while getting audio stream: " + err);
-        })
+        });
 
         flagRecording = false;
     }
 
     function stopRecording(){
         $('.bar').css('background', 'transparent');
-        recognition.stop();
-        recorder.stop();
         document.getElementById('micButton').style.color = '#FFFFFF';
+
+        recognition.stop();
+
+        recorder.stop();
+
+        flagRecording = true;
+
+
     }
 
     function saveRecords(numRecord){
+        //document.getElementById("dropdown").disabled=true;
         clearInterval(interval);
     	if(numRecord == 1){
     	    document.getElementById('checkCircle1').style.color='orange';

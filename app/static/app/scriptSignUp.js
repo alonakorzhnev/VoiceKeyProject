@@ -38,7 +38,7 @@
         var phrase = selectPhrase.options[selectPhrase.selectedIndex];
 
 
-        if(phrase.value != $("#result").val()) {
+        if(phrase.value.localeCompare($("#result").val())!=0) {
             displayError("Your phrase does not match the selected. Please try again!");
             return;
         }

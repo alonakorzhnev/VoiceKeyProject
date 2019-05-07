@@ -59,9 +59,6 @@ def test():
 
     print(log_likelihood[winner])
 
-    if log_likelihood[winner] >= -25:
-        print("\tdetected as -", speakers[winner])
-    else:
-        print("Error in detecting")
+    print("\tdetected as -", speakers[winner])
 
     return speakers[winner]

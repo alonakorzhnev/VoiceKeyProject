@@ -119,7 +119,7 @@ body {
     padding-bottom: 0.6em;
 }
 
-#micButton {
+#micIcon {
     font-size: 100px !important;
 }
 
@@ -160,3 +160,11 @@ body {
 .bar:nth-child(9)  { left: 113px; animation-duration: 487ms; }
 .bar:nth-child(10) { left: 127px; animation-duration: 442ms; }
 
+p {
+	font-size: 3em;
+}
+
+#display {
+	padding-top: 30px;
+	padding-bottom: 30px;
+}

@@ -23,7 +23,7 @@
 
                 <br>
 
-                <h4 for="player">Record your security phrase:</h4>
+                <h4 for="player">Please press microphone button for recording your security phrase:</h4>
 
                 <br>
 
@@ -45,12 +45,16 @@
                 <br>
 
                 <p align="center">
-                    <button class="button" onclick="toggler()"><i class="fa fa-microphone" aria-hidden="true" id="micButton"></i></button>
+                    <button id="micButton" class="button" onclick="toggler()"><i class="fa fa-microphone" aria-hidden="true" id="micIcon"></i></button>
 
                     <!--<div id="player">
                         <audio controls src=""></audio>
                     </div>-->
                 </p>
+
+
+                    <!--<p id="display"><span id="seconds">00</span>:<span id="tens">00</span></p>-->
+
 
             </div>
 
@@ -68,7 +72,7 @@
 </div>
 <div class="result_container form-group">
     <label for="result">Result</label>
-    <textarea name="result" class="form-control" id="result" rows="1"></textarea>
+    <textarea name="result" class="form-control" id="result" rows="2"></textarea>
 </div>
 
 <div id="error-panel" class="alert" role="alert">

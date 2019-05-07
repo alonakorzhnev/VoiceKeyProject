@@ -76,6 +76,7 @@
     }
 
     function startRecording(){
+
         recogPhrase = '';
         $('#result').text('');
 
@@ -95,7 +96,7 @@
 
         recognition.start();
 
-        document.getElementById('micButton').style.color = '#FF0000';
+        document.getElementById('micIcon').style.color = '#FF0000';
 
     	$("#file").val("");
     	if (navigator.mediaDevices.getUserMedia === undefined) {
@@ -120,19 +121,18 @@
 
     function stopRecording(){
         $('.bar').css('background', 'transparent');
-        document.getElementById('micButton').style.color = '#FFFFFF';
+        document.getElementById('micIcon').style.color = '#FFFFFF';
 
         recognition.stop();
 
         recorder.stop();
 
         flagRecording = true;
-
-
     }
 
     function saveRecords(numRecord){
-        //document.getElementById("dropdown").disabled=true;
+        document.getElementById("dropdown").disabled = true;
+
         clearInterval(interval);
     	if(numRecord == 1){
     	    document.getElementById('checkCircle1').style.color='orange';

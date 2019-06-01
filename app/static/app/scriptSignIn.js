@@ -112,10 +112,13 @@
 
     function startRecording(){
         document.getElementById('micIcon').style.color = '#FF0000';
+        document.getElementById('submitAudio').disabled = true
+
     	$("#file").val("");
     	if (navigator.mediaDevices.getUserMedia === undefined) {
     		displayError("This browser doesn't support getUserMedia.");
     	}
+
         navigator.mediaDevices.getUserMedia(constraints)
         .then(function(stream){
         	audioStream = stream;
@@ -133,6 +136,8 @@
 
     function stopRecording(){
         document.getElementById('micIcon').style.color = '#FFFFFF';
+        document.getElementById('submitAudio').disabled = false
+
     	recorder.stop();
     	clearInterval(interval);
         recorder.exportWAV(function(blob){

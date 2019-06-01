@@ -76,6 +76,7 @@
     }
 
     function startRecording(){
+        document.getElementById('submitAudio').disabled = true
 
         recogPhrase = '';
         $('#result').text('');
@@ -120,6 +121,8 @@
     }
 
     function stopRecording(){
+        document.getElementById('submitAudio').disabled = false
+
         $('.bar').css('background', 'transparent');
         document.getElementById('micIcon').style.color = '#FFFFFF';
 

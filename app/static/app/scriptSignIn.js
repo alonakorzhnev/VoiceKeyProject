@@ -11,15 +11,6 @@
     var interval;
     var flagRecording = true;
 
-
-
-
-
-
-
-
-
-
     $(document).ready(function() {
 
         $('.bar').css('background', 'transparent');
@@ -112,7 +103,8 @@
 
     function startRecording(){
         document.getElementById('micIcon').style.color = '#FF0000';
-        document.getElementById('submitAudio').disabled = true
+        document.getElementById('submitAudio').disabled = true;
+        $('#result').text("");
 
     	$("#file").val("");
     	if (navigator.mediaDevices.getUserMedia === undefined) {

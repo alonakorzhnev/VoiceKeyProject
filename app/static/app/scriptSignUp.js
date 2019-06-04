@@ -19,6 +19,7 @@
     try {
         var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         var recognition = new SpeechRecognition();
+        recognition.lang = 'en-US';
     }
     catch(e) {
         console.error(e);

@@ -4,7 +4,8 @@ import scipy.io.wavfile as wav
 from django.conf import settings
 from django.shortcuts import render
 from speakerRecognition import gmm
-from django.http.response import HttpResponse, HttpResponseNotFound
+from django.http.response import HttpResponse
+import speech_recognition as sr
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 from django.shortcuts import redirect
 import smtplib
@@ -54,8 +55,8 @@ def handleSignIn(request):
             userData = json.loads(request.POST['userName'])
             userName = userData['userName']
 
-            #if not os.path.isdir(os.path.join(settings.MEDIA_ROOT, userName)):
-                #return HttpResponse("ERROR: Username or audio data are not correct")
+            if not os.path.isdir(os.path.join(settings.DATA_ROOT, "usersData", userName)):
+                return HttpResponse("SignIn failed. User name or audio data is incorrect. Please try again!")
 
             try:
                 os.mkdir(os.path.join(settings.DATA_ROOT, 'whoIsIt'))
@@ -71,21 +72,33 @@ def handleSignIn(request):
             fs, audio = wav.read(path)
             wav.write(path, fs, audio)
 
-            """r = sr.Recognizer()
+            r = sr.Recognizer()
             testAudio = sr.AudioFile(path)
             with testAudio as source:
                 audio = r.record(source)
 
-            phrase = r.recognize_google(audio)"""
+            phrase = r.recognize_google(audio)
+            print(phrase)
+
+            pathToPhrase = os.path.join(settings.DATA_ROOT, 'usersData', userName)
+            file = open(os.path.join(pathToPhrase, 'info.txt'), 'r')
+            text = file.read()
+            fileLines = text.splitlines()
+
+            phraseParts = fileLines.__getitem__(2).split(' ')
+            secretPhrase = phraseParts.__getitem__(2)
+            for i in range(3, phraseParts.__len__()):
+                secretPhrase += " " + phraseParts.__getitem__(i)
+            file.close()
 
             winner = gmm.test()
-            if winner == userName:
+            if winner == userName and phrase == secretPhrase:
                 flagUser = True
                 secretName = userName
                 msg = "Successful SignIn"
             else:
                 flagUser = False
-                msg = "SignIn failed. User name or voice password is incorrect. Please try again!"
+                msg = "SignIn failed. User name or audio data is incorrect. Please try again!\nThe phrase you said is: " + phrase
         except Exception as err:
             msg = str(err)
         return HttpResponse(msg)
@@ -152,11 +165,11 @@ def handleForgot(request):
             emailCheck = emailCheck.split(' ').__getitem__(1)
             if userName != userCheck or email != emailCheck:
                 raise Exception("ERROR: There is a problem with User Name or Email!")
-            phraseParts = fileLines.__getitem__(2).split(' ')
 
+            phraseParts = fileLines.__getitem__(2).split(' ')
             phrase = phraseParts.__getitem__(2)
-            for i in range(3,phraseParts.__len__()):
-                phrase += " "+phraseParts.__getitem__(i)
+            for i in range(3, phraseParts.__len__()):
+                phrase += " " + phraseParts.__getitem__(i)
             file.close()
 
             systemUser = 'systemvoice2@gmail.com'
